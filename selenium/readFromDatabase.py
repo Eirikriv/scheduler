@@ -1,6 +1,8 @@
 from database import db
 from database import Courses
 
+#returns the last entry in the "Courses" database
+
 def getLastentryfromDatabase():
     courses = Courses.query.all()
     returnVar = ""
@@ -8,4 +10,5 @@ def getLastentryfromDatabase():
         returnVar = course.coursename
     return returnVar
 
+#printfunction can be removed, this is jus to test
 print(getLastentryfromDatabase())

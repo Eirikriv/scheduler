@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 
+#Connecting to Database on pythonanywheresite
 app = Flask(__name__)
 app.config["DEBUG"] = True
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
@@ -14,6 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 comments = []
 
+#Creating an importable db object of the "Courses database"
 class Courses(db.Model):
     __tablename__ = "Courses"
     studentid = db.Column('studentid',db.Unicode, primary_key=True)

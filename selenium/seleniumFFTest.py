@@ -11,3 +11,4 @@ browser = webdriver.Firefox()
 browser.get("http://www.itslearning.no/")
 print browser.page_source
 browser.close()
+#TestScript for Selenium**

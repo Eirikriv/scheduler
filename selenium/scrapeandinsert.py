@@ -10,18 +10,20 @@ from database import Courses
 import time
 #import time to slow selenium down
 
+#inserts a row into the Courses database
 def insertIntoDatabase(studentid, courseid, coursename):
     insertion = Courses(studentid,courseid,coursename)
     db.session.add(insertion)
     db.session.commit()
 
 
-
+#Starts a virtual display, needed to run selenium on linux server
 def startdisplay():
     display = Display(visible=0, size=(800, 600))
     display.start()
 
-
+#Asks for username and password in console, then scrapes the itslearning page for the given username
+#Returns the last course in the "Active" courselist
 def scrapeItslearning():
     driver = webdriver.Firefox()
     u_username=raw_input("NTNU username: ")
@@ -62,6 +64,8 @@ def scrapeItslearning():
 
     driver.close()
     return singleReturnVar
+
+#Scrapes, then inserts course into database with stuentid and courseid as hard-coded constants
 
 def main():
     startdisplay()
