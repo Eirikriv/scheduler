@@ -2,3 +2,11 @@ language: python
 python:
   - "2.6"
   - "2.7"
+
+  before_script:
+  - composer install --no-interaction
+  
+  script:
+ #Her må vi liste opp alle unit tester og andre tester som vi vil at Travis skal kjøre ved build
+ #Kan kanskje dette automatiseres? Altså at tester legges automatisk til her?
+
