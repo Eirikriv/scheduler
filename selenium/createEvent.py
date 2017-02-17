@@ -8,7 +8,10 @@ from oauth2client import client
 from oauth2client import tools
 
 import datetime
+from database import db
+from database import Courses
 
+#returns the last entry in the "Courses" database
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
@@ -49,6 +52,13 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+def getLastentryfromDatabase():
+    courses = Courses.query.all()
+    returnVar = ""
+    for course in courses:
+        returnVar = course.coursename
+    return returnVar
+
 def formatAndChangeStartDate(dato):
 
   today = datetime.datetime(int(dato[6:11]), int(dato[3:5]) , int(dato[0:2]), 18, 00)
@@ -63,6 +73,7 @@ def create_event(tittel, dato):
     date = formatAndChangeStartDate(dato)
     service = discovery.build('calendar', 'v3', http=http)
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    tittel = getLastentryfromDatabase()   
     event = {
       'summary': 'paamelding til '+tittel,
       'location': 'Kjel',

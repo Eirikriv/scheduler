@@ -11,4 +11,4 @@ def getLastentryfromDatabase():
     return returnVar
 
 #printfunction can be removed, this is jus to test
-print(getLastentryfromDatabase())
+
