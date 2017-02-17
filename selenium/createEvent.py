@@ -39,7 +39,6 @@ def get_credentials():
         os.makedirs(credential_dir)
     credential_path = os.path.join(credential_dir,
                                    'calendar-python-quickstart.json')
-    print("I run!")
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
@@ -56,6 +55,7 @@ def getLastentryfromDatabase():
     courses = Courses.query.all()
     returnVar = ""
     for course in courses:
+        print(course.coursename)
         returnVar = course.coursename
     return returnVar
 
@@ -67,7 +67,7 @@ def formatAndChangeStartDate(dato):
   earlier_str = earlier.strftime("%Y%m%d")
   return earlier_str
 
-def create_event(tittel, dato):
+def create_event(dato):
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     date = formatAndChangeStartDate(dato)
@@ -75,22 +75,20 @@ def create_event(tittel, dato):
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     tittel = getLastentryfromDatabase()   
     event = {
-      'summary': 'paamelding til '+tittel,
-      'location': 'Kjel',
+      'summary': 'Lecture in course: '+tittel,
+      'location': 'R1',
       'description': tittel,
       'start': {
-        'dateTime': date[0:4]+'-'+date[4:6]+'-'+date[6:8]+'T11:57:00',
+        'dateTime': date[0:4]+'-'+date[4:6]+'-'+date[6:8]+'T08:15:00',
         'timeZone': 'Europe/Oslo',
       },
       'end': {
-        'dateTime': date[0:4]+'-'+date[4:6]+'-'+date[6:8]+'T12:00:00',
+        'dateTime': date[0:4]+'-'+date[4:6]+'-'+date[6:8]+'T10:00:00',
         'timeZone': 'Europe/Oslo',
       },
       'reminders': {
         'useDefault': True,
       },
     }
-    print(event)
     event = service.events().insert(calendarId='primary', body=event).execute()
 
-create_event("Pause","22.02.2017")

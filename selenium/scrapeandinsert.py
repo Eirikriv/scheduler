@@ -6,7 +6,7 @@ from selenium import webdriver
 from getpass import getpass
 from database import db
 from database import Courses
-
+from createEvent import create_event
 import time
 #import time to slow selenium down
 
@@ -72,4 +72,6 @@ def main():
     coursename=scrapeItslearning()
     print(coursename)
     insertIntoDatabase("01","01",coursename)
+    time.sleep(8)
+    create_event("23.02.2017")
 main()
