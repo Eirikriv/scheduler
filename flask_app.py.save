@@ -14,13 +14,15 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 comments = []
 
-class Courses(db.Model):
+class Comment(db.Model):
+    
     __tablename__ = "Courses"
-    studentid = db.Column('studentid',db.Unicode, primary_key=True)
-    courseid = db.Column('courseid', db.Unicode)
-    coursename = db.Column('coursename',db.Unicode)
-    def __init__(self, studentid, courseid, coursename):
-        self.studentid = studentid
-        self.courseid = courseid
-        self.coursename = coursename
- 
+    
+    id = db.Column(db.Integer, primary_key=True)
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "GET":
+        return render_template("main_page.html", comments=comments)
+
+    comments.append(request.form["contents"])
+    return redirect(url_for('index'))

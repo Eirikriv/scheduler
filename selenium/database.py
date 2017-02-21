@@ -18,11 +18,22 @@ comments = []
 #Creating an importable db object of the "Courses database"
 class Courses(db.Model):
     __tablename__ = "Courses"
-    studentid = db.Column('studentid',db.Unicode, primary_key=True)
-    courseid = db.Column('courseid', db.Unicode)
-    coursename = db.Column('coursename',db.Unicode)
-    def __init__(self, studentid, courseid, coursename):
-        self.studentid = studentid
-        self.courseid = courseid
-        self.coursename = coursename
- 
+    studentID = db.Column('studentID',db.Unicode, primary_key=True)
+    courseName = db.Column('courseName', db.Unicode)
+    startTime = db.Column('startTime', db.Unicode)
+    endTime = db.Column('endTime', db.Unicode)
+    stardate = db.Column('stardate', db.Unicode)
+    enddate = db.Column('enddate', db.Unicode)
+    description = db.Column('description', db.Unicode)
+    location = db.Column('location', db.Unicode)
+    attachments = db.Column('attachments', db.Unicode)
+    def __init__(self, studentID, courseName, startTime, endTime, stardate, enddate, description, location, attachments):
+        self.studentID = studentID
+        self.courseName = courseName
+        self.startTime = startTime
+        self.endTime = endTime
+        self.stardate = stardate
+        self.enddate = enddate
+        self.description = description
+        self.location = location
+        self.attachments = attachments 

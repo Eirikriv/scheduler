@@ -6,13 +6,16 @@ from selenium import webdriver
 from getpass import getpass
 from database import db
 from database import Courses
+from readCourseTimeTables import scrapeNtnuCourseWebsites
+from readCourseTimeTables import readfile
 from createEvent import create_event
 import time
+
 #import time to slow selenium down
 
 #inserts a row into the Courses database
-def insertIntoDatabase(studentid, courseid, coursename):
-    insertion = Courses(studentid,courseid,coursename)
+def insertIntoDatabase(studentID,CourseName,startTime,endTime,stardate,enddate,description,location,attachements):
+    insertion = Courses(studentID,CourseName,startTime,endTime,stardate,enddate,description,location,attachements)
     db.session.add(insertion)
     db.session.commit()
 
@@ -70,8 +73,11 @@ def scrapeItslearning():
 def main():
     startdisplay()
     coursename=scrapeItslearning()
-    print(coursename)
-    insertIntoDatabase("01","01",coursename)
-    time.sleep(8)
-    create_event("23.02.2017")
+    scrapeNtnuCourseWebsites(coursename[0:7])
+    tableToInsert=readfile()
+    tableToInsert = tableToInsert[0]
+#database table on the form: [studentID,courseName,starttime,endtime,startdate,enddate,description,where,attachments]
+    insertIntoDatabase("01",coursename,tableToInsert[0],tableToInsert[1],tableToInsert[2],tableToInsert[3],tableToInsert[4],tableToInsert[5],tableToInsert[6])
+    #time.sleep(8)
+    #create_event("23.02.2017")
 main()
