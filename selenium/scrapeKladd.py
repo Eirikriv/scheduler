@@ -18,28 +18,28 @@ def insertIntoDatabase(studentID,CourseName,startTime,endTime,stardate,enddate,d
     insertion = Courses(studentID,CourseName,startTime,endTime,stardate,enddate,description,location,attachements)
     db.session.add(insertion)
     db.session.commit()
-    print("commitedToDB")
 
 
 #Starts a virtual display, needed to run selenium on linux server
+def startdisplay():
+    display = Display(visible=0, size=(800, 600))
+    display.start()
 
 #Asks for username and password in console, then scrapes the itslearning page for the given username
 #Returns the last course in the "Active" courselist
 def scrapeItslearning():
-    display = Display(visible=0, size=(800, 600))
-    display.start()
     driver = webdriver.Firefox()
     u_username=raw_input("NTNU username: ")
     u_password=getpass("NTNU password: ") 
     driver.get('http://www.instabart.no/') 
-
+    time.sleep(2)
     pressend=driver.find_element_by_class_name("itslearning")
-    time.sleep(1)
+    time.sleep(2)
     pressend.click()
 
-    time.sleep(3)
+    time.sleep(2)
     its=driver.find_element_by_id("username")
-    time.sleep(1)
+    time.sleep(2)
     its.send_keys(u_username) 
 
     passwd = driver.find_element_by_id("password")
@@ -51,39 +51,49 @@ def scrapeItslearning():
     time.sleep(1)
     loginbutton.click()
 
-    time.sleep(4)
+    time.sleep(2)
 
     driver.get('https://ntnu.itslearning.com/main.aspx?TextURL=Course%2fAllCourses.aspx')
-    time.sleep(4)
+    time.sleep(2)
     driver.switch_to.frame(driver.find_element_by_name("mainmenu"))
-    time.sleep(4)
+    time.sleep(2)
     courses = driver.find_elements_by_css_selector("td > .ccl-iconlink")
 
     listOfCourses = []
 
     for course in courses:
         listOfCourses.append(course.text)
+  
 
-    driver.quit()
-    display.stop()
-    return listOfCourses
+    driver.close()
+    return listOfCourses[0]
 
-
+#Scrapes, then inserts course into database with stuentid and courseid as hard-coded constants
 def findCourseCode(courseCodeString):
     return courseCodeString.split(" ")[0]
-#Scrapes, then inserts course into database with stuentid and courseid as hard-coded constants
-
 def main():
-    courses=scrapeItslearning()
-    for course in courses:
-        print(findCourseCode(course))
-        try:        
-            scrapeNtnuCourseWebsites(findCourseCode(course))
-            tableToInsert=readfile()
-            tableToInsert = tableToInsert[0]
-            print tableToInsert
-            insertIntoDatabase("01",course,tableToInsert[0],tableToInsert[1],tableToInsert[2],tableToInsert[3],tableToInsert[4],tableToInsert[5],tableToInsert[6])
-            break
-        except:
-            continue       
+    startdisplay()
+    coursename=scrapeItslearning()
+    scrapeNtnuCourseWebsites(coursename[0:7])
+    tableToInsert=readfile()
+    tableToInsert = tableToInsert[0]
+#database table on the form: [studentID,courseName,starttime,endtime,startdate,enddate,description,where,attachments]
+    insertIntoDatabase("01",coursename,tableToInsert[0],tableToInsert[1],tableToInsert[2],tableToInsert[3],tableToInsert[4],tableToInsert[5],tableToInsert[6])
+    #time.sleep(8)
+    #create_event("23.02.2017")
 main()
+
+#def main():
+#    startdisplay()
+#    courses=scrapeItslearning()
+#    for course in courses:
+#        print (findCourseCode(course))
+#        try:
+#            scrapeNtnuCourseWebsites(findCourseCode(course))
+#            tableToInsert=readfile()
+#            tableToInsert = tableToInsert[0]
+#database table on the form: [studentID,courseName,starttime,endtime,startdate,enddate,description,where,attachments]
+#            insertIntoDatabase("01",coursename,tableToInsert[0],tableToInsert[1],tableToInsert[2],tableToInsert[3],tableToInsert[4],tableToInsert[5],tableToInsert[6])
+#        except:
+#   	    continue
+#main()
