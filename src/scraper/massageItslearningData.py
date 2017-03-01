@@ -5,7 +5,7 @@ import time
 def mounthConverter(mounthAsString):
     mounths=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
     returnVar = 0
-    for n in range(len(mounths)-1):
+    for n in range(len(mounths)):
         if mounths[n]==mounthAsString:
             returnVar = n + 1 
             break
@@ -20,10 +20,11 @@ def getDayOnRightFormat(day): #Handles cases where days can be 3. or 12. then ad
         returnVar = "00"
     else:
         returnday = day[0:-1]
+        print returnday
         if len(returnday)>=2:     #returns 00 if the day is not between 1 and 31
-        returnVar = returnday
-    else:
-        returnVar = "0"+returnday
+            returnVar = returnday
+        else:
+            returnVar = "0"+returnday
     return returnVar
 
 def getMounthOnRightFormat(mounth):

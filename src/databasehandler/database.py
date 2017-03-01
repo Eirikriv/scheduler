@@ -1,12 +1,12 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
-
+from databaseConnectDetails import * 
 #Connecting to Database on pythonanywheresite
 app = Flask(__name__)
 app.config["DEBUG"] = True
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-    username="eirikriv",
-    password="hubrohubro",
+    username=unamePythonAnywhere,
+    password=passwordPythonAnywhere,
     hostname="eirikriv.mysql.pythonanywhere-services.com",
     databasename="eirikriv$Courses",
 )

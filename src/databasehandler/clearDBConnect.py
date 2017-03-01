@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 import os
-from database2 import *
+from databaseConnectDetails import *
 username = unameHeroku
 password = passwordHeroku
 
