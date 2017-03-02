@@ -38,10 +38,15 @@ class massageItslearningDataTester(unittest.TestCase):
             self.assertEqual(isNumber(inList[n]),correctList[n])
 
     def test_prepDeliveriesForDatabase_sample_scrape_correct(self):
-        scrapeList =[['Assignment 2', 'TDT4300 DATAVAREH/DATAGRUVED V\xc5R 2017', 'Deadline: 10. mars 2017 08:00'], ['Assignment 2: Demonstrated learning of Core 1', 'TDT4140 PROGRAMVAREUTVIKL V\xc5R 2017', 'Deadline: 10. mars 2017 23:55']]
-        correctList = [[' Assignment 2', ' TDT4300 DATAVAREH/DATAGRUVED', '2017-03-10', '08:00:00'], [' Assignment 2:', ' TDT4140 PROGRAMVAREUTVIKL', '2017-03-10', '23:55:00']]
+        scrapeList =[['Assignment 2', 'TDT4300 DATAVAREH/DATAGRUVED V\xc5R 2017', 'Deadline: 10. mars 2017 08:00'], ['Assignment 2: Demonstrated learning of Core 1', 'TDT4140 PROGRAMVAREUTVIKL V\xc5R 2017', 'Deadline: 10. mars 2017 23:55'],['fsvsdv', 'zxce', 'D12fv']]
+        correctList = [[' Assignment 2', ' TDT4300 DATAVAREH/DATAGRUVED', '2017-03-10', '08:00:00'], [' Assignment 2:', ' TDT4140 PROGRAMVAREUTVIKL', '2017-03-10', '23:55:00'],['', '', '00-00-00', '00:00:00']]
         for n in range(len(scrapeList)):
             self.assertEqual(prepDeliveriesForDatabase(scrapeList[n]),correctList[n])
+
+    def test_prepAllDeiveriesForDatabase_sample_scrape_correct(self):
+        scrapeList =[['Assignment 2', 'TDT4300 DATAVAREH/DATAGRUVED V\xc5R 2017', 'Deadline: 10. mars 2017 08:00'], ['Assignment 2: Demonstrated learning of Core 1', 'TDT4140 PROGRAMVAREUTVIKL V\xc5R 2017', 'Deadline: 10. mars 2017 23:55'],['fsvsdv', 'zxce', 'D12fv']]
+        correctList = [[' Assignment 2', ' TDT4300 DATAVAREH/DATAGRUVED', '2017-03-10', '08:00:00'], [' Assignment 2:', ' TDT4140 PROGRAMVAREUTVIKL', '2017-03-10', '23:55:00'],['', '', '00-00-00', '00:00:00']]
+        self.assertEqual(prepAllDeiveriesForDatabase(scrapeList),correctList)
 
 if __name__ == '__main__':
     unittest.main()

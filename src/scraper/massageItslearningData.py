@@ -43,40 +43,43 @@ def getDateOnRightFormat(day):
 
 
 def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databaseformat, returns on formate:
-    returnList=[]                                #[assingmentdetails, coursename, date, time]
-    assigmentDetailsSting = rawScrapeFromIts[0]
-    assigmnentDetails = assigmentDetailsSting.split()
-    crDetails = ""
-    for n in range(0,len(assigmnentDetails)):
-        crDetails=crDetails+" "+assigmnentDetails[n]
-        if n == 1:
-            break
-    returnList.append(crDetails)
+    returnList=[]      
+    try:                          #[assingmentdetails, coursename, date, time]
+        assigmentDetailsSting = rawScrapeFromIts[0]
+        assigmnentDetails = assigmentDetailsSting.split()
+        crDetails = ""
+        for n in range(0,len(assigmnentDetails)):
+            crDetails=crDetails+" "+assigmnentDetails[n]
+            if n == 1:
+                break
+        returnList.append(crDetails)
 
-    courseNameString = rawScrapeFromIts[1]
-    courseName = courseNameString.split()
-    name = courseName[0:len(courseName)-2]
-    crName=""
-    for words in name:
-        crName = crName + " "+ words 
-    returnList.append(crName)
+        courseNameString = rawScrapeFromIts[1]
+        courseName = courseNameString.split()
+        name = courseName[0:len(courseName)-2]
+        crName=""
+        for words in name:
+            crName = crName + " "+ words 
+        returnList.append(crName)
 
-    deadLineDetailsString = rawScrapeFromIts[2]
-    deadLineDetails = deadLineDetailsString.split()
-    day = getDateOnRightFormat(deadLineDetails[1])
-    month=monthConverter(deadLineDetails[2])
-    print month
-    month=getDateOnRightFormat(month)
-    print month
+        deadLineDetailsString = rawScrapeFromIts[2]
+        deadLineDetails = deadLineDetailsString.split()
+        day = getDateOnRightFormat(deadLineDetails[1])
+        month=monthConverter(deadLineDetails[2])
 
-    year = deadLineDetails[3]
-    dateString = year + "-" + month + "-" + day
-    returnList.append(dateString)
+        month=getDateOnRightFormat(month)
 
-    time = deadLineDetails[4]
-    time = time + ":00"
 
-    returnList.append(time)
+        year = deadLineDetails[3]
+        dateString = year + "-" + month + "-" + day
+        returnList.append(dateString)
+
+        time = deadLineDetails[4]
+        time = time + ":00"
+
+        returnList.append(time)
+    except:
+        returnList = ['', '', '00-00-00', '00:00:00']
     return returnList
 
 
@@ -85,8 +88,3 @@ def prepAllDeiveriesForDatabase(totalDeliveryList): #prepares for all assingment
     for deliveries in totalDeliveryList:
         returnList.append(prepDeliveriesForDatabase(deliveries))
     return returnList
-
-def massageItsLearningDataMain():
-    rawList = scrapeItslearning()
-    readyForDataBase = prepAllDeiveriesForDatabase(rawList)
-    return readyForDataBase
