@@ -11,39 +11,38 @@ def monthConverter(monthAsString):
             break
     if(returnVar==0):
         returnVar = "00" 
-    return returnVar
+    return str(returnVar)
 
-    
-def getDayOnRightFormat(day): 
-    
-    returnVar = 0 
-    
+def isNumber(s):
     try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+    
+def getDateOnRightFormat(day): 
+    
+    try: 
         len(day)
-        if(len(day) <=1 or len(day) >= 3):
+        returnVar = ""
+        if len(day) > 3:
             returnVar = "00"
         else:
-            if(day[0]=="."):
-                returnVar = "0" + day[1]
+            for words in day:
+                if(isNumber(words)):
+                    returnVar = returnVar+words
+            if len(returnVar)==1:
+                returnVar = "0"+returnVar
+            elif(len(returnVar)==2):
+                None
             else:
-                returnVar = day
-    except: 
-        return "00"
-    
+                returnVar="00"   
+    except:
+        returnVar="00"
     return returnVar
 
-def getMounthOnRightFormat(mounth):
-    returnVar=0
-    if(mounth=="00"):
-        returnVar = "00"
-    else:
-        if len(mounth)>=2:
-            returnVar = mounth
-        else:
-            returnVar = "0"+mounth
-    return returnVar
 
-def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databaeformat, returns on formate:
+def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databaseformat, returns on formate:
     returnList=[]                                #[assingmentdetails, coursename, date, time]
     assigmentDetailsSting = rawScrapeFromIts[0]
     assigmnentDetails = assigmentDetailsSting.split()
@@ -64,12 +63,14 @@ def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databae
 
     deadLineDetailsString = rawScrapeFromIts[2]
     deadLineDetails = deadLineDetailsString.split()
-    day = getDayOnRightFormat(deadLineDetails[1])
-    mounth=mounthConverter(deadLineDetails[2])
-    mounth=getMounthOnRightFormat(mounth)
+    day = getDateOnRightFormat(deadLineDetails[1])
+    month=monthConverter(deadLineDetails[2])
+    print month
+    month=getDateOnRightFormat(month)
+    print month
 
     year = deadLineDetails[3]
-    dateString = year + "-" + mounth + "-" + day
+    dateString = year + "-" + month + "-" + day
     returnList.append(dateString)
 
     time = deadLineDetails[4]
