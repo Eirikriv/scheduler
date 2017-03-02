@@ -10,32 +10,37 @@ def monthConverter(monthAsString):
             returnVar = n + 1 
             break
     if(returnVar==0):
-        returnVar = "00" #returns 00 if name of month is not found
+        returnVar = "00" 
     return returnVar
 
     
-def getDayOnRightFormat(day): #Handles cases where days can be 3. or 12. then adds a 0 in front of 3. and removes .
+def getDayOnRightFormat(day): 
+    
     returnVar = 0 
-    if(len(day) <=1):
-        returnVar = "00"
-    else:
-        returnday = day[0:-1]
-        print returnday
-        if len(returnday)>=2:     #returns 00 if the day is not between 1 and 31
-            returnVar = returnday
+    
+    try:
+        len(day)
+        if(len(day) <=1 or len(day) >= 3):
+            returnVar = "00"
         else:
-            returnVar = "0"+returnday
+            if(day[0]=="."):
+                returnVar = "0" + day[1]
+            else:
+                returnVar = day
+    except: 
+        return "00"
+    
     return returnVar
 
-def getMonthOnRightFormat(month):
+def getMounthOnRightFormat(mounth):
     returnVar=0
-    if(month== "00"):
+    if(mounth=="00"):
         returnVar = "00"
     else:
-        if len(month)>=2:
-            returnVar = month
+        if len(mounth)>=2:
+            returnVar = mounth
         else:
-            returnVar = "0" + month
+            returnVar = "0"+mounth
     return returnVar
 
 def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databaeformat, returns on formate:
@@ -60,8 +65,8 @@ def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databae
     deadLineDetailsString = rawScrapeFromIts[2]
     deadLineDetails = deadLineDetailsString.split()
     day = getDayOnRightFormat(deadLineDetails[1])
-    mounth=monthConverter(deadLineDetails[2])
-    mounth=getMonthOnRightFormat(mounth)
+    mounth=mounthConverter(deadLineDetails[2])
+    mounth=getMounthOnRightFormat(mounth)
 
     year = deadLineDetails[3]
     dateString = year + "-" + mounth + "-" + day

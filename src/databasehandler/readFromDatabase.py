@@ -3,7 +3,7 @@ from database import Courses
 import json
 #returns the last entry in the "Courses" database
 
-def getLastentryfromDatabase():
+def getLastEntryFromDatabase():
     courses = Courses.query.all()
     returnList = []
     for course in courses:
