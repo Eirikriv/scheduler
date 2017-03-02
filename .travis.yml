@@ -5,12 +5,11 @@ python:
 # command to install dependencies
 
 before_install:
-  - cd src 
-  - cd scraper
+  - cd tests 
 
 
 
-script: python hubro_backend_unit_tests_scraper.py
+script: python hubro_backend_unit_tests.py
   
  #Her må vi liste opp alle unit tester og andre tester som vi vil at Travis skal kjøre ved build
  #Kan kanskje dette automatiseres? Altså at tester legges automatisk til her?
