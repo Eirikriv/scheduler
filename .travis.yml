@@ -3,13 +3,22 @@ python:
   - "2.7"
 
 # command to install dependencies
-install: "pip install -r requirements.txt"
+
 
 script: echo foo
   before_script:
   - composer install --no-interaction
+
+before_install:
+  - cd src 
+  - cd scraper
+
+install: "pip install -r requirements.txt"
+
+
+script:
+  hubro_backend_unit_tests_scraper.py
   
-  script:
  #Her må vi liste opp alle unit tester og andre tester som vi vil at Travis skal kjøre ved build
  #Kan kanskje dette automatiseres? Altså at tester legges automatisk til her?
 
