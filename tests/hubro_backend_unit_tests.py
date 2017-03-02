@@ -1,24 +1,28 @@
 
 import sys
 
-sys.path.append("/Users/eirikrivedal/Desktop/python/hubro/deveirik/src/scraper")
+sys.path.append("../src/scraper")
+
+#sys.path.append("/Users/eirikrivedal/Desktop/python/hubro/deveirik/src/scraper")
+#sys.path.append("/Users/eirikrivedal/Desktop/python/hubro/deveirik/src/scraper")
 
 from massageItslearningData import *
+	
 
 import unittest
 
 class massageItslearningDataTester(unittest.TestCase):
     def test1(self): #testing mounthConverter for right dates
-    	mounths=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
+    	months=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
         counter = 1
-        for mounth in mounths:
-        	self.assertEqual(mounthConverter(mounth), counter)
+        for month in months:
+        	self.assertEqual(monthConverter(month), counter)
         	counter +=1
 
     def test2(self): #testing mounthConverter for wrong dates
-    	incorretcMounths=["jan", "feb" ,"January","Janu"]
-    	for incorretcMounth in incorretcMounths:
-    		self.assertEqual(mounthConverter(incorretcMounth),"00")
+    	incorretcMonths=["jan", "feb" ,"January","Janu"]
+    	for incorretcMonth in incorretcMonths:
+    		self.assertEqual(monthConverter(incorretcMonth),"00")
     
     #def test3(self): # testing getDayOnRightFormat for valit inputs, need more work here
     #	days = ["01","31","15","7","3"]
