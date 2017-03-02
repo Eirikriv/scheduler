@@ -4,9 +4,7 @@ python:
 
 # command to install dependencies
 
-
-script: echo foo
-  before_script:
+before_script:
   - composer install --no-interaction
 
 before_install:
