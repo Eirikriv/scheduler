@@ -2,11 +2,11 @@ import time
 
 #Converts to the form: [AssimentDetails, CourseName, deadline date, deadline time]
 
-def mounthConverter(mounthAsString):
-    mounths=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
+def mounthConverter(monthAsString):
+    months=["janua","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
     returnVar = 0
     for n in range(len(mounths)):
-        if mounths[n]==mounthAsString:
+        if months[n]==monthAsString:
             returnVar = n + 1 
             break
     if(returnVar==0):
@@ -15,7 +15,7 @@ def mounthConverter(mounthAsString):
 
     
 def getDayOnRightFormat(day): #Handles cases where days can be 3. or 12. then adds a 0 in front of 3. and removes .
-    returnVar = 0
+    returnVar = 0 
     if(len(day) <=1):
         returnVar = "00"
     else:
