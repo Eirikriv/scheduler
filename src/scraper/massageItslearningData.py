@@ -3,7 +3,7 @@ import time
 #Converts to the form: [AssimentDetails, CourseName, deadline date, deadline time]
 
 def mounthConverter(monthAsString):
-    months=["janua","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
+    months=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
     returnVar = 0
     for n in range(len(mounths)):
         if months[n]==monthAsString:
