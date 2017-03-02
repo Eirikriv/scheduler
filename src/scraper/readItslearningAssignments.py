@@ -27,7 +27,7 @@ def loginAndGoToItslearningMainPage(sleepTimer):
     itslearningButton.click() #now try to login to itslearning
     sleep(sleepTimer)
     loggedIn = False
-    while(!loggedIn):
+    while(not loggedIn):
         try:
             username = getUsername()
             password = getUserPassword()

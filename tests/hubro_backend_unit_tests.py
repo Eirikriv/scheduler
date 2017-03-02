@@ -4,7 +4,7 @@ import sys
 sys.path.append("../src/scraper")
 
 from massageItslearningData import *	
-
+from readItslearningAssignments import *
 import unittest
 
 class massageItslearningDataTester(unittest.TestCase):
@@ -47,6 +47,15 @@ class massageItslearningDataTester(unittest.TestCase):
         scrapeList =[['Assignment 2', 'TDT4300 DATAVAREH/DATAGRUVED V\xc5R 2017', 'Deadline: 10. mars 2017 08:00'], ['Assignment 2: Demonstrated learning of Core 1', 'TDT4140 PROGRAMVAREUTVIKL V\xc5R 2017', 'Deadline: 10. mars 2017 23:55'],['fsvsdv', 'zxce', 'D12fv']]
         correctList = [[' Assignment 2', ' TDT4300 DATAVAREH/DATAGRUVED', '2017-03-10', '08:00:00'], [' Assignment 2:', ' TDT4140 PROGRAMVAREUTVIKL', '2017-03-10', '23:55:00'],['', '', '00-00-00', '00:00:00']]
         self.assertEqual(prepAllDeiveriesForDatabase(scrapeList),correctList)
+    # def test_getUsername(self):
+    #     correctUname="eirikriv"
+    #     username = getUsername()
+    #     self.assertEqual(username,correctUname)
+    # def test_getUsername(self):
+    #     correctPass="12345"
+    #     password = getUserPassword()
+    #     self.assertEqual(password,correctPass)
+
 
 if __name__ == '__main__':
     unittest.main()
