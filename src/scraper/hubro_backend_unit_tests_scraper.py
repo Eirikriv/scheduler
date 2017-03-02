@@ -1,6 +1,6 @@
 import unittest
 
-from massageItslearningData import *
+from messageItslearningData import *
 
 
 class massageItslearningDataTester(unittest.TestCase):

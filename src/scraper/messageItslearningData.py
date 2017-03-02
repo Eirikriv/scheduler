@@ -60,8 +60,8 @@ def prepDeliveriesForDatabase(rawScrapeFromIts): #converts to applicable databae
     deadLineDetailsString = rawScrapeFromIts[2]
     deadLineDetails = deadLineDetailsString.split()
     day = getDayOnRightFormat(deadLineDetails[1])
-    mounth=mounthConverter(deadLineDetails[2])
-    mounth=getMounthOnRightFormat(mounth)
+    mounth=monthConverter(deadLineDetails[2])
+    mounth=getMonthOnRightFormat(mounth)
 
     year = deadLineDetails[3]
     dateString = year + "-" + mounth + "-" + day
