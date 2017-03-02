@@ -5,6 +5,7 @@ sys.path.append("../src/scraper")
 
 from massageItslearningData import *	
 from readItslearningAssignments import *
+from scrapeForCoursesItslearning import *
 import unittest
 
 class massageItslearningDataTester(unittest.TestCase):
@@ -55,6 +56,42 @@ class massageItslearningDataTester(unittest.TestCase):
     #     correctPass="12345"
     #     password = getUserPassword()
     #     self.assertEqual(password,correctPass)
+    def test_convertweekAndDayToDate_sample_dates_correct(self):
+        days = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag"]
+        weeks = ["01","20","51","50","24"]
+        year = ["2012","2016","2016","2017","2018"]
+        correctOutput = ["2012-01-02","2016-05-17", "2016-12-21","2017-12-14","2018-06-15"]
+        for n in range(len(days)):
+            self.assertEqual(convertweekAndDayToDate(days[n],weeks[n],year[n]), correctOutput[n])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

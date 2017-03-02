@@ -5,8 +5,13 @@ import datetime
 
 def convertweekAndDayToDate(dayAsString,weekNrAsString,yearAsString):
     days = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag"]
+    counter =0
+    for n in range(len(days)):
+        if(dayAsString==days[n]):
+            counter = n+1
+
     d = yearAsString + "-W" + weekNrAsString 
-    r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w")
+    r = datetime.datetime.strptime(d + "-"+str(counter), "%Y-W%W-%w")
     r= str(r)
     return r[0:10]
 
