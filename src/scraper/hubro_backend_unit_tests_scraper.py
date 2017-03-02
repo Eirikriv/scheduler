@@ -3,7 +3,7 @@ import unittest
 from messageItslearningData import *
 
 
-class massageItslearningDataTester(unittest.TestCase):
+class messageItslearningDataTester(unittest.TestCase):
     def test_monthConverter_all_months_correct_number(self):
         months=["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"]
         counter = 1
