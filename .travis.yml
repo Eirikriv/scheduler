@@ -11,7 +11,6 @@ before_install:
   - cd src 
   - cd scraper
 
-install: "pip install -r requirements.txt"
 
 
 script: hubro_backend_unit_tests_scraper.py
