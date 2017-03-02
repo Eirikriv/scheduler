@@ -4,8 +4,7 @@ python:
 
 # command to install dependencies
 
-before_script:
-  - composer install --no-interaction
+
 
 before_install:
   - cd src 
