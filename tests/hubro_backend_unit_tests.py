@@ -2,10 +2,11 @@
 import sys
 
 sys.path.append("../src/scraper")
-
+sys.path.append("../src/databasehandler")
 from massageItslearningData import *	
 from readItslearningAssignments import *
 from scrapeForCoursesItslearning import *
+from clearDBConnect import *
 import unittest
 
 class massageItslearningDataTester(unittest.TestCase):
@@ -76,10 +77,12 @@ class massageItslearningDataTester(unittest.TestCase):
     #def test_scrapeNtnuCourseWebsites_incorrect(self):
      #   
       #  self.assertEqual(scrapeNtnuCourseWebsites("TD4140"),"")
-
-
-
-
+    def test_insertUserIntoDatabase_correctInsert(self):
+        userName="Eirik Rivedal"
+        userID= "0010"
+        insertUserIntoDatabase(userID,userName)
+        self.assertEqual(getEntryFromUserTable(userID),(userID, userName))
+        
 
 
 
