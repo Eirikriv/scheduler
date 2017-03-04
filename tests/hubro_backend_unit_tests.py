@@ -79,7 +79,7 @@ class massageItslearningDataTester(unittest.TestCase):
       #  self.assertEqual(scrapeNtnuCourseWebsites("TD4140"),"")
     def test_insertUserIntoDatabase_correctInsert(self):
         userName="Eirik Rivedal"
-        userID= "0010"
+        userID= "0011"
         insertUserIntoDatabase(userID,userName)
         self.assertEqual(getEntryFromUserTable(userID),(userID, userName))
         
