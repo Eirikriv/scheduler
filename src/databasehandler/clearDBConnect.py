@@ -5,7 +5,7 @@ import os
 
 #username = unameHeroku
 #password = passwordHeroku
-URI = 'mysql://'+str(username)+':'+str(password)+'@us-cdbr-iron-east-04.cleardb.net/heroku_f8b7f102c73b268'
+#URI = 'mysql://'+str(username)+':'+str(password)+'@us-cdbr-iron-east-04.cleardb.net/heroku_f8b7f102c73b268'
 
 
 def insertUserIntoDatabase(StringUserID,StringUserName):
