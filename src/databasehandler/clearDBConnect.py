@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData,Table, select
 import os
-from databaseConnectDetails import *
+#from databaseConnectDetails import *
 
 
 username = unameHeroku
