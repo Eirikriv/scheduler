@@ -1,9 +1,14 @@
 from selenium import webdriver
-from con import *
+from getpass import getpass
+from pyvirtualdisplay import Display
 import time
 
 def scrapeBlackBoard():
 	try:
+		display = Display(visible=0, size=(800, 600))
+    	display.start()
+		u_username=raw_input("NTNU BB username: ")
+    	u_password=getpass("NTNU BB password: ")
 		driver=webdriver.Chrome()
 
 		driver.get('http://www.instabart.no/') 
@@ -23,11 +28,11 @@ def scrapeBlackBoard():
 		time.sleep(2)
 		its=driver.find_element_by_id("username")
 		time.sleep(1)
-		its.send_keys(unameBlackBoard) 
+		its.send_keys(u_username) 
 
 		passwd = driver.find_element_by_id("password")
 		time.sleep(1)
-		passwd.send_keys(passBlackBoard)
+		passwd.send_keys(u_password)
 
 
 		loginbutton = driver.find_element_by_class_name("submit")
@@ -54,14 +59,14 @@ def scrapeBlackBoard():
 				assignmentsForACourse=[]
 				assignmentsForACourse.append(courseDescription +"| " + singleExercises[n].text)
 				allDeliveriesList.append(assignmentsForACourse)
+		driver.quit()
+    	display.stop()
 		return allDeliveriesList
 	except:
 		print "did not find any assignments for you on blackboard"
+		driver.quit()
+    	display.stop()
 		return None
-	#finally:
-		#driver.quit()
-		#display.close()
-
 def isNumber(s):
     try:
         float(s)
