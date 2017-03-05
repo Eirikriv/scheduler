@@ -3,11 +3,7 @@ from pyvirtualdisplay import Display
 #display.sendstop() #use this to close display after running 
 # Load a Firefox selenium webdriver session
 from selenium import webdriver
-from database import db
-from database import Courses
-from readCourseTimeTables import scrapeNtnuCourseWebsites
-from readCourseTimeTables import readfile
-from createEvent import create_event
+from readItlearningCourses.py import scrapeNtnuCourseWebsites
 from scrapingSiteCredentials import *
 import time
 
@@ -79,9 +75,7 @@ def main():
             print(findCourseCode(course))
             try:        
                 scrapeNtnuCourseWebsites(findCourseCode(course))
-                tableToInsert=readfile()
-                tableToInsert = tableToInsert[0]
-                print tableToInsert
+                #TODO
             except:
                 print "no times found on coursesite"
                 continue   

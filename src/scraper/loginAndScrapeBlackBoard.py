@@ -12,7 +12,11 @@ def getUserPassword(): #get NTNU Feide password from user
     u_password=passBlackBoard
     return u_password
 
-def scrapeBlackBoard():
+def sleep(sleepTimer): #sleep selenium so pages can load before next action is taken
+    time.sleep(sleepTimer)
+    return 
+
+def scrapeBlackBoard(sleepTimer):
     try:
         display = Display(visible=0, size=(800, 600))
         display.start()
@@ -23,10 +27,10 @@ def scrapeBlackBoard():
         driver.get('http://www.instabart.no/') 
 
         pressend=driver.find_element_by_id("blackboard")
-        time.sleep(1)
+        sleep(sleepTimer)
         pressend.click()
 
-        time.sleep(3)
+        sleep(sleepTimer)
         el = driver.find_element_by_id('org')
         for option in el.find_elements_by_tag_name('option'):
             if(option.text == 'NTNU'):
@@ -34,32 +38,32 @@ def scrapeBlackBoard():
                 break
         pressSubmit=driver.find_element_by_id("submit")
         pressSubmit.click()
-        time.sleep(2)
+        sleep(sleepTimer)
         its=driver.find_element_by_id("username")
-        time.sleep(1)
+        sleep(sleepTimer)
         its.send_keys(u_username) 
 
         passwd = driver.find_element_by_id("password")
-        time.sleep(1)
+        sleep(sleepTimer)
         passwd.send_keys(u_password)
 
 
         loginbutton = driver.find_element_by_class_name("submit")
         loginbutton.click()
-        time.sleep(4)
+        sleep(sleepTimer)
         courses = driver.find_element_by_class_name("courseListing")
         elementList = courses.find_elements_by_tag_name("li")
         allDeliveriesList = []
         for n in range(0,len(elementList)):
             
             driver.get("https://ntnu.blackboard.com/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_70_1")
-            time.sleep(2)
+            sleep(sleepTimer)
             infoList=[]
             courses = driver.find_element_by_class_name("courseListing")
             elementList = courses.find_elements_by_tag_name("li")
             courseDescription = elementList[n].text
             elementList[n].click()
-            time.sleep(2)
+            sleep(sleepTimer)
             courses = driver.find_elements_by_class_name("h-va-baseline")
             driver.find_element_by_xpath('//*[@title="\xc3\x98vinger"]').click()
             excersises = driver.find_element_by_id("content_listContainer")
