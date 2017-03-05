@@ -106,6 +106,7 @@ def parceFromBlackBoardToDatabase(doubleScrapeListFromBB):
 		except:
 			continue
 	return returnList
+
 #in ['TDT4145 Datamodellering og databasesystemer (2017 V\xc5R)| 26. Jan 23.59.',
 def monthConverter(monthAsString):
     months=["Jan","Feb","Mar","Apr","Mai","Jun","Jul","Aug","Sept","Okt","Nov","Des"]

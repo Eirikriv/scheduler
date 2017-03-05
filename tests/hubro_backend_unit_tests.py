@@ -77,32 +77,36 @@ class massageItslearningDataTester(unittest.TestCase):
     #def test_scrapeNtnuCourseWebsites_incorrect(self):
      #   
       #  self.assertEqual(scrapeNtnuCourseWebsites("TD4140"),"")
-    #def test_insertUserIntoDatabase_correctInsert(self):
-     #   userName="Eirik Rivedal"
-      #  userID= "0011"
-       # insertUserIntoDatabase(userID,userName)
-        #self.assertEqual(getEntryFromUserTable(userID),(userID, userName))
+    def test_insertUserIntoDatabase_correctInsert(self):
+        userName="Eirik Rivedal"
+        userID= "1400"
+        insertUserIntoDatabase(userID,userName)
+        self.assertEqual(getEntryFromUserTable(userID),(userID, userName))
+
+    def test_insertCourseIntoDatabase_correctInsert(self):
+        courseID="0011"
+        courseName= "TDT4140"
+        insertCourseIntoDatabase(courseID,courseName)
+        self.assertEqual(getEntryFromCourseTable(courseID),(courseID, courseName))
+    
+    def test_insertAssignmentIntoDatabase_correctInsert(self):
+        assignmentID="0008"
+        assignmnentDate= "2017-12-20"
+        assignmnentTime= "23:59:00"
+        insertAssignmnentIntoDatabase(assignmentID,assignmnentDate,assignmnentTime)
+        self.assertEqual(getEntryFromAssignmnentTable(assignmentID),(assignmentID, assignmnentDate,assignmnentTime))
+    
+    def test_insertLectureIntoDatabase_correctInsert(self):
+        lectureID="0008"
+        lectureDate= "2017-12-20"
+        lectureStartTime= "08:15:00"
+        lectureEndTime ="10:00:00"
+        lectureDescription="Lecture in TDT 4140"
+        lectureLocation="R1"
+        insertLectureIntoDatabase(lectureID,lectureDate,lectureStartTime,lectureEndTime,lectureDescription,lectureLocation)
+        self.assertEqual(getEntryFromLectureTable(lectureID),(lectureID, lectureDate, lectureDescription, lectureLocation, lectureStartTime,lectureEndTime))
+    
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

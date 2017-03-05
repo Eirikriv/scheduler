@@ -146,31 +146,9 @@ def getEntryFromAssignment_courseTable(stringAssignmentID):
 	selectLecture_course = select([assignment_course]).where(assignment_course.c.assignmentID == stringAssignmentID)
 	for row in connection.execute(selectLecture_course):
 		return row
-print(getEntryFromAssignment_courseTable("0001"))
-
-#print(getEntryFromLecture_courseTable("0001"))
-#print(getEntryFromLectureTable("0001"))
-#print(engine.table_names())
+#print(getEntryFromAssignment_courseTable("0001"))
 
 
-
-
-
-
-
-
-
-
-
-
-#print(repr(user))
-
-#stmt = 'SELECT * FROM user'
-#result_proxy = connection.execute(stmt)
-#results = result_proxy.fetchall()
-#print results
-# firstRow = results[0]
-# firstRowKeys = firstRow.keys()
 
 
 
