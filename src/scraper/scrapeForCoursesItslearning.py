@@ -51,15 +51,15 @@ def readCourseFileReturnAllLectureExersiseEvents(scrapeFromCourseSite,year): #in
             tempListTwo.append(where)
             weeklyevents.append(tempListTwo)
         courseSemesterTimeTable.append(weeklyevents)
-    return courseSemesterTimeTable[0][0]
+    return courseSemesterTimeTable
 #Returns [startdate,enddate,description,where] inside a list of [lecture1, lecture2, oving1, oving2 etc]
 
 
 def scrapeNtnuCourseWebsites(courseCode): #eks TIO4110, gives a long string of courses and times, needs to be modified
     try:
         returnList=""
-        #display = Display(visible=0, size=(800, 600))
-        #display.start()
+        display = Display(visible=0, size=(800, 600))
+        display.start()
         driver = webdriver.Chrome()
         webpage = "https://www.ntnu.no/studier/emner/"+courseCode+"#tab=timeplan"
         driver.get(webpage)
@@ -76,12 +76,14 @@ def scrapeNtnuCourseWebsites(courseCode): #eks TIO4110, gives a long string of c
         unicode_string = text.encode('utf-8')
         returnList = unicode_string.splitlines()
         del returnList[0]
+        driver.quit()
+        display.stop()
+        return returnList
+
     except:
         print "wrong coursecode or " + webpage +" is down"
-    finally:
-        print "got here"
-        #driver.quit()
-        #display.close()
+        return None
+
     
-    return returnList
+    
 
