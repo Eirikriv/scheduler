@@ -1,15 +1,24 @@
 from selenium import webdriver
 from getpass import getpass
 from pyvirtualdisplay import Display
+from scrapingSiteCredentials import *
 import time
+
+def getUsername(): #get NTNU Feide username from user
+    u_username=unameBlackBoard
+    return u_username
+
+def getUserPassword(): #get NTNU Feide password from user
+    u_password=passBlackBoard
+    return u_password
 
 def scrapeBlackBoard():
     try:
         display = Display(visible=0, size=(800, 600))
         display.start()
-        u_username=raw_input("NTNU BB username: ")
-        u_password=getpass("NTNU BB password: ")
-        driver=webdriver.Chrome()
+        u_username=getUsername()
+        u_password=getUserPassword()
+        driver=webdriver.Firefox()
 
         driver.get('http://www.instabart.no/') 
 

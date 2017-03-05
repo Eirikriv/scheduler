@@ -2,14 +2,14 @@ import time
 from pyvirtualdisplay import Display
 from selenium import webdriver
 from getpass import getpass
-
+from scrapingSiteCredentials import *
 
 def getUsername(): #get NTNU Feide username from user
-    u_username=raw_input("NTNU username: ")
+    u_username=unameItslearning
     return u_username
 
 def getUserPassword(): #get NTNU Feide password from user
-    u_password=getpass("NTNU password: ")
+    u_password=passItslearning
     return u_password
 
 def sleep(sleepTimer): #sleep selenium so pages can load before next action is taken

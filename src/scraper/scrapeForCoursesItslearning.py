@@ -1,5 +1,6 @@
 from pyvirtualdisplay import Display
 from selenium import webdriver
+
 import time
 import datetime
 
@@ -24,7 +25,7 @@ def convertweekAndDayToDate(dayAsString,weekNrAsString,yearAsString):
     return r[0:10]
 
 
-def readCourseFileReturnAllLectureExersiseEvents(scrapeFromCourseSite,year): #input: [Mandag 08:15 - 10:00 2-14,17 \xc3\x98ving BIT, MLREAL, MTDT, MTING, MTI\xc3\x98T, MTTK R1',..]
+def readCourseReturnAllLectureExersiseEvents(scrapeFromCourseSite,year): #input: [Mandag 08:15 - 10:00 2-14,17 \xc3\x98ving BIT, MLREAL, MTDT, MTING, MTI\xc3\x98T, MTTK R1',..]
     courseScrape=scrapeFromCourseSite
     courseSemesterTimeTable=[]
     for elements in courseScrape: 
@@ -60,7 +61,7 @@ def scrapeNtnuCourseWebsites(courseCode): #eks TIO4110, gives a long string of c
         returnList=""
         display = Display(visible=0, size=(800, 600))
         display.start()
-        driver = webdriver.Chrome()
+        driver = webdriver.Firefox()
         webpage = "https://www.ntnu.no/studier/emner/"+courseCode+"#tab=timeplan"
         driver.get(webpage)
         time.sleep(1)
