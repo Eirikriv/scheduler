@@ -1,5 +1,4 @@
 import time
-
 #Converts to the form: [AssimentDetails, CourseName, deadline date, deadline time]
 
 def monthConverter(monthAsString):

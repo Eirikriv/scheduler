@@ -2,6 +2,7 @@ from selenium import webdriver
 from getpass import getpass
 from pyvirtualdisplay import Display
 from scrapingSiteCredentials import *
+import traceback
 import time
 
 def getUsername(): #get NTNU Feide username from user
@@ -79,6 +80,7 @@ def scrapeBlackBoard(sleepTimer):
         print "did not find any assignments for you on blackboard"
         driver.quit()
         display.stop()
+        traceback.print_exc()
         return None
 def isNumber(s):
     try:

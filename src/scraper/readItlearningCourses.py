@@ -6,7 +6,7 @@ from selenium import webdriver
 from readItlearningCourses.py import scrapeNtnuCourseWebsites
 from scrapingSiteCredentials import *
 import time
-
+import traceback
 def getUsername(): #get NTNU Feide username from user
     u_username=unameItslearning
     return u_username
@@ -61,6 +61,7 @@ def scrapeItslearning(sleepTimer):
         print "did not find any courses for you on itslearning"
         driver.quit()
         display.stop()
+        traceback.print_exc()
         return None
 
 
@@ -77,8 +78,10 @@ def main():
                 scrapeNtnuCourseWebsites(findCourseCode(course))
                 #TODO
             except:
+                traceback.print_exc()
                 print "no times found on coursesite"
                 continue   
     except:
+        traceback.print_exc()
         print "error"
 

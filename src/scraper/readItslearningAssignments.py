@@ -42,6 +42,7 @@ def loginAndGoToItslearningMainPage(sleepTimer):
             loggedIn=True
             break
         except:
+            traceback.print_exc()
             print "Wrong username or password, please try again and use the login you would use for itslearning (Feide)"
     sleep(sleepTimer)
     driver.get("https://ntnu.itslearning.com/DashboardMenu.aspx?LocationType=Hierarchy")
@@ -69,6 +70,7 @@ def loginAndGoToItslearningMainPage(sleepTimer):
             maininfoList.append(infoList)
     except: 
         print ("Could not find any assigments for you on itslearning")
+        traceback.print_exc()
     
     driver.quit()
     display.stop()

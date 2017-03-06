@@ -77,14 +77,13 @@ def scrapeNtnuCourseWebsites(courseCode): #eks TIO4110, gives a long string of c
         unicode_string = text.encode('utf-8')
         returnList = unicode_string.splitlines()
         del returnList[0]
-        driver.quit()
         display.stop()
         return returnList
 
     except:
         print "wrong coursecode or " + webpage +" is down"
+        traceback.print_exc()
         return None
 
-    
-    
+print readCourseReturnAllLectureExersiseEvents(scrapeNtnuCourseWebsites("TDT4140"), "2017")
 
