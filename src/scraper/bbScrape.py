@@ -1,35 +1,21 @@
 from selenium import webdriver
-from pyvirtualdisplay import Display
 from scrapingSiteCredentials import *
-import traceback
 import time
-
-def getUsername(): #get NTNU Feide username from user
-    u_username=unameBlackBoard
-    return u_username
-
-def getUserPassword(): #get NTNU Feide password from user
-    u_password=passBlackBoard
-    return u_password
-
-def sleep(sleepTimer): #sleep selenium so pages can load before next action is taken
-    time.sleep(sleepTimer)
-    return 
-
-def scrapeBlackBoard(sleepTimer):
-    allDeliveriesList=[]
+from pyvirtualdisplay import Display
+import traceback
+def scrapeBlackBoard():
     try:
-        display = Display(visible=0, size=(1200, 1000))
+        display = Display(visible=0, size=(800, 600))
         display.start()
-        u_username=getUsername()
-        u_password=getUserPassword()
         driver=webdriver.Firefox()
+
         driver.get('http://www.instabart.no/') 
+
         pressend=driver.find_element_by_id("blackboard")
-        sleep(sleepTimer)
+        time.sleep(1)
         pressend.click()
-	
-        sleep(sleepTimer)
+
+        time.sleep(3)
         el = driver.find_element_by_id('org')
         for option in el.find_elements_by_tag_name('option'):
             if(option.text == 'NTNU'):
@@ -37,52 +23,36 @@ def scrapeBlackBoard(sleepTimer):
                 break
         pressSubmit=driver.find_element_by_id("submit")
         pressSubmit.click()
-        sleep(sleepTimer)
+        time.sleep(2)
         its=driver.find_element_by_id("username")
-        sleep(sleepTimer)
-        its.send_keys(u_username) 
+        time.sleep(1)
+        its.send_keys(unameBlackBoard) 
 
         passwd = driver.find_element_by_id("password")
-        sleep(sleepTimer)
-        passwd.send_keys(u_password)
+        time.sleep(1)
+        passwd.send_keys(passBlackBoard)
 
 
         loginbutton = driver.find_element_by_class_name("submit")
         loginbutton.click()
-        time.sleep(7)
+        time.sleep(10)
         courses = driver.find_element_by_class_name("courseListing")
         elementList = courses.find_elements_by_tag_name("li")
         allDeliveriesList = []
         for n in range(0,len(elementList)):
-            print (len(elementList))
+            
             driver.get("https://ntnu.blackboard.com/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_70_1")
-            sleep(7)
+            time.sleep(2)
             infoList=[]
             courses = driver.find_element_by_class_name("courseListing")
             elementList = courses.find_elements_by_tag_name("li")
             courseDescription = elementList[n].text
             elementList[n].click()
-            driver.implicitly_wait(5)
-	    
+            time.sleep(2)
             courses = driver.find_elements_by_class_name("h-va-baseline")
-	    driver.implicitly_wait(8)
+            time.sleep(4)
 	    driver.find_element_by_xpath('//*[@title="\xc3\x98vinger"]').click()
-	    driver.find_element_by_id("courseMenu_link").click
-            sleep(sleepTimer)
-	    #driver.find_element_by_xpath('//*[@title="\xc3\x98vinger"]').click()
-	    #driver.find_element_by_class_name("clickpuller")
-           # sleep(sleepTimer)
-	   # menuItem=driver.find_element_by_id("courseMenuPalette_contents")
-	   # print menuItem.text
-	   # ovingItem = menuItem.find_elements_by_tag_name("li")
-	  #  for n in range(len(ovingItem)):
-	 #       if(n==7):
-	#	    print(ovingItem[n].text)
-	#	    ovingItem[n].click()
-            #driver.find_element_by_xpath('//*[@title="\xc3\x98vinger"]').click()
-	   
-            #time.sleep(10)
-            excersises = driver.find_element_by_class_name("courseListing")
+            excersises = driver.find_element_by_id("content_listContainer")
             singleExercises = excersises.find_elements_by_tag_name("li")
             for n in range(len(singleExercises)):
                 assignmentsForACourse=[]
@@ -93,10 +63,12 @@ def scrapeBlackBoard(sleepTimer):
         return allDeliveriesList
     except:
         print "did not find any assignments for you on blackboard"
-        driver.quit()
-        display.stop()
         traceback.print_exc()
-        return allDeliveriesList
+        return None
+    #finally:
+        #driver.quit()
+        #display.close()
+
 def isNumber(s):
     try:
         float(s)
@@ -136,7 +108,6 @@ def parceFromBlackBoardToDatabase(doubleScrapeListFromBB):
         except:
             continue
     return returnList
-
 #in ['TDT4145 Datamodellering og databasesystemer (2017 V\xc5R)| 26. Jan 23.59.',
 def monthConverter(monthAsString):
     months=["Jan","Feb","Mar","Apr","Mai","Jun","Jul","Aug","Sept","Okt","Nov","Des"]
@@ -180,6 +151,7 @@ def inScrapeOutListWithCourseAndDeliveryDate(scrape):
     return returnList
 
 def scrapeAndGetRawReadyForDatabase():
-    scrape=scrapeBlackBoard(6)
+    scrape=scrapeBlackBoard()
     return inScrapeOutListWithCourseAndDeliveryDate(scrape)
-print(scrapeAndGetRawReadyForDatabase())
+
+scrapeAndGetRawReadyForDatabase()

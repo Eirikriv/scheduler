@@ -3,7 +3,7 @@ from pyvirtualdisplay import Display
 from selenium import webdriver
 from getpass import getpass
 from scrapingSiteCredentials import *
-
+import traceback
 def getUsername(): #get NTNU Feide username from user
     u_username=unameItslearning
     return u_username
@@ -35,7 +35,7 @@ def loginAndGoToItslearningMainPage(sleepTimer):
             its.send_keys(username)
             passwd = driver.find_element_by_id("password")
             sleep(sleepTimer)
-            passwd.send_keys("password")
+            passwd.send_keys(password)
             loginbutton = driver.find_element_by_class_name("submit")
             sleep(sleepTimer)
             loginbutton.click()
@@ -60,6 +60,7 @@ def loginAndGoToItslearningMainPage(sleepTimer):
             courses = driver.find_elements_by_class_name("h-va-baseline")
             infoList.append(courses[n].text)
             courses[n].click()
+	    sleep(sleepTimer)
             courseTitle=driver.find_element_by_class_name("treemenu-title")
             infoList.append(courseTitle.text)
             sleep(sleepTimer)
@@ -75,3 +76,4 @@ def loginAndGoToItslearningMainPage(sleepTimer):
     driver.quit()
     display.stop()
     return maininfoList
+print(loginAndGoToItslearningMainPage(4))
