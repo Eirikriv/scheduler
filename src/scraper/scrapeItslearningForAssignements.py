@@ -4,6 +4,7 @@ from selenium import webdriver
 from getpass import getpass
 from scrapingSiteCredentials import *
 import traceback
+from massageItslearningData import *
 def getUsername(): #get NTNU Feide username from user
     u_username=unameItslearning
     return u_username
@@ -62,7 +63,8 @@ def loginAndGetAllCurrentAssignements(sleepTimer):
             courses[n].click()
 	    sleep(sleepTimer)
             courseTitle=driver.find_element_by_class_name("treemenu-title")
-            print courseTitle.text
+            sleep(sleepTimer)
+            courseTitle=driver.find_element_by_class_name("treemenu-title")
             infoList.append(courseTitle.text)
             sleep(sleepTimer)
             driver.switch_to.frame(driver.find_element_by_name("mainmenu"))
@@ -77,4 +79,6 @@ def loginAndGetAllCurrentAssignements(sleepTimer):
     driver.quit()
     display.stop()
     return maininfoList
-print(loginAndGetAllCurrentAssignements(6))
+
+print(prepAllDeiveriesForDatabase(loginAndGetAllCurrentAssignements(6)))
+
