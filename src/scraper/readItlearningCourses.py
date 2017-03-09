@@ -3,7 +3,6 @@ from pyvirtualdisplay import Display
 #display.sendstop() #use this to close display after running 
 # Load a Firefox selenium webdriver session
 from selenium import webdriver
-from readItlearningCourses.py import scrapeNtnuCourseWebsites
 from scrapingSiteCredentials import *
 import time
 import traceback
@@ -65,23 +64,4 @@ def scrapeItslearning(sleepTimer):
         return None
 
 
-def findCourseCode(courseCodeString):
-    return courseCodeString.split(" ")[0]
-#Scrapes itslearning
-
-def main():
-    courses=scrapeItslearning(3)
-    try:
-        for course in courses:
-            print(findCourseCode(course))
-            try:        
-                scrapeNtnuCourseWebsites(findCourseCode(course))
-                #TODO
-            except:
-                traceback.print_exc()
-                print "no times found on coursesite"
-                continue   
-    except:
-        traceback.print_exc()
-        print "error"
 

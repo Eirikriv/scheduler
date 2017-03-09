@@ -48,7 +48,7 @@ def getEntryFromUser_courseTable(stringUserId):
 		return row
 #print(getEntryFromUser_courseTable("0001"))
 
-def insertCourseIntoDatabase(stringCourseID,stringCourseName):
+def insertACourseIntoDatabase(stringCourseID,stringCourseName):
 	engine = create_engine(URI)
 	connection = engine.connect()
 	metadata = MetaData()
@@ -59,9 +59,9 @@ def insertCourseIntoDatabase(stringCourseID,stringCourseName):
 	connection.execute(new_course)
 #insertCourseIntoDatabase("0001","TDT4140")
 
-def getEntryFromCourseTable(stringCourseId):
-	engine = create_engine(URI)
-	connection = engine.connect()
+def getEntryFromCourseTable(engine, connection,stringCourseId):
+	engine = engine
+	connection = connection
 	metadata = MetaData()
 	course = Table('course', metadata, autoload=True , autoload_with=engine)
 	selectCourse = select([course]).where(course.c.courseID == stringCourseId)
@@ -88,9 +88,9 @@ def getEntryFromAssignmnentTable(stringAssignmnentID):
 	for row in connection.execute(selectAssignmnent):
 		return row
 #print(getEntryFromAssignmnentTable("0001"))
-def insertLectureIntoDatabase(stringLectureID,stringLectureDate,stringLectureStartTime,stringLectureEndTime,stringLectureDescription,stringLectureLocation):
-	engine = create_engine(URI)
-	connection = engine.connect()
+def insertLecturesIntoDatabase(engine, connection, stringLectureID,stringLectureDate,stringLectureStartTime,stringLectureEndTime,stringLectureDescription,stringLectureLocation):
+	engine = engine
+	connection = connection
 	metadata = MetaData()
 	lecture = Table('lecture', metadata, autoload=True , autoload_with=engine)
 	#print(metadata.tables.keys())
@@ -107,17 +107,38 @@ def getEntryFromLectureTable(stringLectureID):
 	selectLecture = select([lecture]).where(lecture.c.lectureID == stringLectureID)
 	for row in connection.execute(selectLecture):
 		return row
-def insertLecture_courseIntoDatabase(stringLectureID,stringCourseID):
+
+def getLastEntryFromLectureTable(engine, connection):
+	engine = engine
+	connection = connection
+	metadata = MetaData()
+	lecture = Table('lecture', metadata, autoload=True , autoload_with=engine)
+	selectLecture=select([lecture])
+	result = connection.execute(selectLecture)
+	result =list(result)
+	return result[-1]
+	
+def getEntriesFromLectureTable(stringLectureID):
 	engine = create_engine(URI)
 	connection = engine.connect()
 	metadata = MetaData()
+	lecture = Table('lecture', metadata, autoload=True , autoload_with=engine)
+	selectLecture = select([lecture]).where(lecture.c.lectureID == stringLectureID)
+	returnList=[]
+	for row in connection.execute(selectLecture):
+		returnList.append(row)
+	return returnList
+
+def insertLecture_courseIntoDatabase(engine, connection,stringLectureID,stringCourseID):
+	engine = engine
+	connection = connection
+	metadata = MetaData()
 	lecture_course = Table('lecture_course', metadata, autoload=True , autoload_with=engine)
-	#print(metadata.tables.keys())
 	ins = lecture_course.insert()
 	new_lecture_course = ins.values(lectureID=stringLectureID,courseID=stringCourseID)
 	connection.execute(new_lecture_course)
-#insertLecture_courseIntoDatabase("0001","0001")
 
+#insertLecture_courseIntoDatabase("0001","0001")
 def getEntryFromLecture_courseTable(stringLectureID):
 	engine = create_engine(URI)
 	connection = engine.connect()
