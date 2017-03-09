@@ -16,7 +16,7 @@ def sleep(sleepTimer): #sleep selenium so pages can load before next action is t
     time.sleep(sleepTimer)
     return 
 
-def loginAndGoToItslearningMainPage(sleepTimer):
+def loginAndGetAllCurrentAssignements(sleepTimer):
     display = Display(visible=0, size=(800, 600))
     display.start()
     driver=webdriver.Firefox()
@@ -76,4 +76,4 @@ def loginAndGoToItslearningMainPage(sleepTimer):
     driver.quit()
     display.stop()
     return maininfoList
-print(loginAndGoToItslearningMainPage(4))
+print(loginAndGetAllCurrentAssignements(4))
