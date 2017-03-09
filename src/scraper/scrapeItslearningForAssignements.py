@@ -17,7 +17,7 @@ def sleep(sleepTimer): #sleep selenium so pages can load before next action is t
     return 
 
 def loginAndGetAllCurrentAssignements(sleepTimer):
-    display = Display(visible=0, size=(800, 600))
+    display = Display(visible=0, size=(1200, 1000))
     display.start()
     driver=webdriver.Firefox()
     driver.get('http://www.instabart.no/') 
@@ -60,9 +60,9 @@ def loginAndGetAllCurrentAssignements(sleepTimer):
             courses = driver.find_elements_by_class_name("h-va-baseline")
             infoList.append(courses[n].text)
             courses[n].click()
-	        sleep(sleepTimer)
+	    sleep(sleepTimer)
             courseTitle=driver.find_element_by_class_name("treemenu-title")
-            print courseTitle
+            print courseTitle.text
             infoList.append(courseTitle.text)
             sleep(sleepTimer)
             driver.switch_to.frame(driver.find_element_by_name("mainmenu"))
@@ -77,4 +77,4 @@ def loginAndGetAllCurrentAssignements(sleepTimer):
     driver.quit()
     display.stop()
     return maininfoList
-
+print(loginAndGetAllCurrentAssignements(6))
