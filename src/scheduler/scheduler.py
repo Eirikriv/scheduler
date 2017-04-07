@@ -2,6 +2,7 @@
 from __future__ import print_function
 import httplib2
 import os
+import traceback
 import sys
 sys.path.insert(1, '/Library/Python/2.7/site-packages')
 from apiclient import discovery
@@ -10,6 +11,7 @@ from oauth2client import client
 from oauth2client import tools
 import datetime
 #imports to manage the client secret of google calendar
+import traceback
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
@@ -22,24 +24,14 @@ SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
-def formatAndchangeDateBackByOne(dato): #Changes the date back by one, input date format: YYYYMMDD , outputdateformat: YYYYMMDDTTTT 
-  today = datetime.datetime(int(dato[0:4]), int(dato[4:6]) , int(dato[6:8]), 18, 00)
-  DD = datetime.timedelta(days=1)
-  earlier = today - DD 
-  earlier = earlier.isoformat() 
-  return earlier
+def ofsetDateByANumberOfDays(dateYYYYMMDD, daysoffset): #"-" between YYYY-DD, negative day brings you backvards in time
+  offsetDate = ""
+  date = datetime.datetime(int(dateYYYYMMDD[0:4]), int(dateYYYYMMDD[5:7]) , int(dateYYYYMMDD[8:10]), 18, 00)
+  DD = datetime.timedelta(days=daysoffset)
+  offsetDate = date + DD
+  offsetDate = offsetDate.isoformat()
+  return offsetDate[0:10]
 
-def formateDate(dato): #
-  today = datetime.datetime(int(dato[0:4]), int(dato[4:6]) , int(dato[6:8]), 18, 00) #not used
-  now = today.isoformat() 
-  #earlier_str = earlier.strftime("%Y%m%d")
-  return now
-
-def formateDateNew(date): #returns the date you give as argument as a converted ready to use string for google cal api
-  today = datetime.datetime(int(dato[0:4]), int(dato[4:6]) , int(dato[6:8]), 18, 00) 
-  print(today)
-print(formateDate("ss"))
-formateDateNew
 def get_credentials(): #required to connect to google calendar API
     """Gets valid user credentials from storage.
 
@@ -67,7 +59,6 @@ def get_credentials(): #required to connect to google calendar API
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
-
 
 def getStartTimeFromEvent(event): #gets the start time from an event recieved from getDayEvents
 	endWithDate=event.split('E',1)[0]
@@ -116,18 +107,16 @@ def checkIfEventFitsBetweenTwo(firstEvent,SecoundEvent,event): #forste to tar in
 	if(flagg==0):
 		return [False,None,None]
 
-def getDayEvents(date, earliestStart, latestEnd):
+def getDayEvents(date, daysAhead, earliestStart, latestEnd): #date on form YYYY-DD-MM
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
     # now = datetime.datetime.utcnow().isoformat() + 'Z' 'Z' indicates UTC time
-    now = formateDate(date)
-    now = now[0:11] +'23:59:00Z'
-
-    later = formatAndchangeDateBackByOne(date) 
-    later = later[0:11] +'23:59:00Z'
+    dateStart = ofsetDateByANumberOfDays(date,-1)
+    dateStart = date + "T" + "23:59:00Z"
+    dateEnd = ofsetDateByANumberOfDays(date,daysAhead)
     eventsResult = service.events().list(
-        calendarId='primary', timeMin=later, timeMax=now,maxResults=30, singleEvents=True,
+        calendarId='primary', timeMin=dateStart, timeMax=dateEnd,maxResults=100, singleEvents=True,
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
     if not events:
@@ -146,7 +135,7 @@ def getDayEvents(date, earliestStart, latestEnd):
 def createAndExecuteEvent(event):
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
-    service = formateDatediscovery.build('calendar', 'v3', http=http)
+    service = discovery.build('calendar', 'v3', http=http)
     beskrivelse=event[6]
     sted=event[7]
     startdato=event[1]
