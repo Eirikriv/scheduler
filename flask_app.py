@@ -1,14 +1,14 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask import request
 import sys
-sys.path.insert(0, '/home/eirikriv/mysite/selenium')
-
-from readFromDatabase import createAndReturnJson
-
-
 app = Flask(__name__)
-json = createAndReturnJson()
-@app.route('/')
-def hello_world():
-    return json
 
+@app.route("/", methods=["GET", "POST"])
+def getRequest():
+    if request.method == "GET":
+        return "Hubro"
+    else:
+        content = request.get_json(force=True)
+    return content
+	
